@@ -1,0 +1,22 @@
+{
+  "name": "cafu-stock-backend",
+  "version": "0.1.0",
+  "description": "web page to control stock",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "stock",
+    "cafu",
+    "control\b\u001b[C",
+    "manage"
+  ],
+  "author": "cafu",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "snyk": "^1.872.0"
+  }
+}
