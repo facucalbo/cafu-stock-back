@@ -1,11 +1,17 @@
 const store = require('./store');
 
+function addProduct( product ){
+    if(!product) {
+        
+    }
 
-function addProduct() {
-    return store.add();
+    const myProduct = {product};
+
+    return store.add( myProduct );
+
 }
 
-function getProduct() {
+function getProduct(){
     return store.get();
 }
 

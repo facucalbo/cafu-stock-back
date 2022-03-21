@@ -1,14 +1,18 @@
 const Model = require('./model');
 
-function addProduct() {
+// add new product
+function addProduct( product ){
+    const myProduct = new Model( product );
 
+    return myProduct.save();
 }
 
-function getProduct() {
-
+// search all products
+function getProduct(){
+    return Model.find();
 }
 
-module.exports = {
+module.exports = { 
     add: addProduct,
     get: getProduct,
 }

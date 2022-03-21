@@ -7,8 +7,7 @@ exports.success = function ( req, res, message, status ) {
     });
 }
 
-exports.error = function ( req, res, message, status, error ) {
-    console.error(error)
+exports.error = function ( req, res, message, status ) {
     res.status(status).send({
         error: '',
         body: message

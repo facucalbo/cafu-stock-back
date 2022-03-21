@@ -1,11 +1,11 @@
 const store = require('./store');
+const boom = require('@hapi/boom');
 
 function addUser(name) {
     if ( !name ) {
-        return new Promise.reject( 'Invalid name' )
+        throw boom.badRequest('Param name is required');
     }
     const user = { name };
-
     return store.add( user );
 }
 
