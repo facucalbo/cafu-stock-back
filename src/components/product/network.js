@@ -6,10 +6,11 @@ const router = express.Router();
 router.post('/', (req, res) => {
     controller.addProduct( req.body )
         .then( product => {
-
+            response.success(req, res, product, 201);
         })
         .catch( err => {
-
+            console.log(err);
+            response.error(req, res, 'Error', 201);
         })
 });
 

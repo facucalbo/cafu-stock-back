@@ -2,6 +2,7 @@ const Model = require( './model' );
 
 function addMessage( message ) {
     // list.push(message);
+    console.log(message);
     const myMessage = new Model(message);
     myMessage.save();
 }
