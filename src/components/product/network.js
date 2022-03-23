@@ -9,7 +9,6 @@ router.post('/', (req, res) => {
             response.success(req, res, product, 201);
         })
         .catch( err => {
-            console.log(err);
             response.error(req, res, 'Error', 201);
         })
 });
@@ -17,7 +16,7 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
     controller.getProduct()
         .then( product => {
-
+            response.success(req, res, product, 201);
         })
         .catch( err => {
 
