@@ -14,8 +14,17 @@ function addProduct( product ){
     return store.add( myProduct );
 }
 
-function getProduct(){
-    return store.get();
+function getAllProduct(){
+    return store.getAll();
+}
+
+function searchProduct( text ) {
+    return store.search( text );
+}
+
+function deleteProduct( productId ) {
+    console.log(productId);
+    return store.delete( productId )
 }
 
 function validateBody( body = {} ) {
@@ -32,5 +41,7 @@ function validateBody( body = {} ) {
 
 module.exports = {
     addProduct,
-    getProduct
+    getAllProduct,
+    searchProduct,
+    deleteProduct,
 }

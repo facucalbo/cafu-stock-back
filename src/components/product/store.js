@@ -8,11 +8,23 @@ function addProduct( product ){
 }
 
 // search all products
-function getProduct(){
+function getAllProduct(){
     return Model.find();
+}
+
+function searchProduct( text ){
+    // return Model.find( {$or: [{type: value}, {brand: value}, {model: value}]} );
+    return Model.find({$text: {$search: text}})
+}
+
+function deleteProduct( productId ) {
+    console.log(productId);
+    return Model.deleteOne({_id: productId});
 }
 
 module.exports = { 
     add: addProduct,
-    get: getProduct,
+    getAll: getAllProduct,
+    search: searchProduct,
+    delete: deleteProduct
 }

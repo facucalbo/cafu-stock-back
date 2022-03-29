@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    controller.getProduct()
+    controller.getAllProduct()
         .then( product => {
             response.success(req, res, product, 201);
         })
@@ -22,5 +22,21 @@ router.get('/', (req, res) => {
 
         })
 });
+
+router.get('/:search', (req, res) => {
+    controller.searchProduct( req.params.search )
+        .then( products => {
+            response.success( req, res, products, 201)
+        })
+        .catch()
+})
+
+router.delete('/:id', (req, res) => {
+    controller.deleteProduct( req.params.id )
+        .then( products => {
+            response.success( req, res, products, 201)
+        })
+        .catch()
+})
 
 module.exports = router;
