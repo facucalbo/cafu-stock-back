@@ -23,7 +23,6 @@ function searchProduct( text ) {
 }
 
 function deleteProduct( productId ) {
-    console.log(productId);
     return store.delete( productId )
 }
 

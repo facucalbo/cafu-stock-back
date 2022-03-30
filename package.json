@@ -4,7 +4,7 @@
   "description": "web page to control stock",
   "main": "server.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/server",
     "dev": "nodemon src/server",
     "build": "tsc -p ."
   },

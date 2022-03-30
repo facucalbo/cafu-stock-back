@@ -17,8 +17,12 @@ function searchProduct( text ){
     return Model.find({$text: {$search: text}})
 }
 
+// delete specific document from collection
 function deleteProduct( productId ) {
-    console.log(productId);
+    // response = Model.deleteOne({_id: productId});
+    // console.log(response);
+
+    // return { _id: productId, response };
     return Model.deleteOne({_id: productId});
 }
 
