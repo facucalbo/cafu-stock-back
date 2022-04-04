@@ -6,7 +6,7 @@ const mySchema = new Schema({
     type: String,
     brand: String,
     model: String,
-    cant: Number,
+    package: Number,
     stock: Number,
     price: Number,
     dateAdded: Date,

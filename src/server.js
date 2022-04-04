@@ -5,7 +5,8 @@ const db = require('./db');
 const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
 
-// mongo shell uri: mongosh "mongodb+srv://first-cluster.fhxif.mongodb.net/myFirstDatabase" --apiVersion 1 --username facundo
+// mongo shell uri: mongosh "mongodb+srv://first-cluster.fhxif.mongodb.net" --apiVersion 1 --username facundo
+// compass uri: mongodb+srv://facundo:<password>@first-cluster.fhxif.mongodb.net/test
 db('mongodb+srv://facundo:facundoPassword123@first-cluster.fhxif.mongodb.net/cafuStock?retryWrites=true&w=majority');
 
 const router = require('./network/routes');

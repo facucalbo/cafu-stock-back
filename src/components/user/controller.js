@@ -1,12 +1,22 @@
 const store = require('./store');
 const boom = require('@hapi/boom');
+const auth = require('../auth/controller');
+const { response } = require('express');
 
-function addUser(name) {
-    if ( !name ) {
+async function addUser( userData ) {
+    if ( !userData ) {
         throw boom.badRequest('Param name is required');
     }
-    const user = { name };
-    return store.add( user );
+    const response = await store.add( userData );
+    const userId = userData.id || response._id || '';
+
+    await auth.upsert({
+        id: userId,
+        username: userData.username,
+        password: userData.password,
+    });
+    // TODO: contemplar que hacer en caso de que no se genere el documento auth
+    return response;
 }
 
 function getUser() {

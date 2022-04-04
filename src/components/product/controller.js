@@ -3,9 +3,7 @@ const boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 function addProduct( product ){
-
     const { error } = validateBody( product )
-
     if( error ) {
         throw boom.badRequest(error.details.map( d => d.message ));
     }
@@ -23,6 +21,9 @@ function searchProduct( text ) {
 }
 
 function deleteProduct( productId ) {
+    if(productId == 'undefined') {
+        throw boom.notFound('Product not found');
+    }
     return store.delete( productId )
 }
 
@@ -31,7 +32,7 @@ function validateBody( body = {} ) {
         type: Joi.string().required(),
         brand: Joi.string().required(),
         model: Joi.string().required(),
-        cant: Joi.number().required(),
+        package: Joi.number().required(),
         stock: Joi.number().required(),
         price: Joi.number().required(),
     })

@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
             response.success(req, res, product, 201);
         })
         .catch( err => {
-            response.error(req, res, 'Error', 201);
+            response.error(req, res, err.output.message, err.output.statusCode);
         })
 });
 
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
             response.success(req, res, product, 201);
         })
         .catch( err => {
-
+            response.error(req, res, err.output.message, err.output.statusCode);
         })
 });
 
@@ -28,15 +28,19 @@ router.get('/:search', (req, res) => {
         .then( products => {
             response.success( req, res, products, 201)
         })
-        .catch()
+        .catch( err => {
+            response.error(req, res, err.output.message, err.output.statusCode);
+        })
 })
 
 router.delete('/:id', (req, res) => {
     controller.deleteProduct( req.params.id )
-        .then( products => {
-            response.success( req, res, products, 201)
+        .then( product => {
+            response.success( req, res, product, 201)
         })
-        .catch()
+        .catch( err => {
+            response.error(req, res, err.output.message, err.output.statusCode);
+        })
 })
 
 module.exports = router;
