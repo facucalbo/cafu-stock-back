@@ -1,12 +1,12 @@
 const store = require('./store');
 const boom = require('@hapi/boom');
 const auth = require('../auth/controller');
-const { response } = require('express');
 
 async function addUser( userData ) {
     if ( !userData ) {
-        throw boom.badRequest('Param name is required');
+        throw boom.badRequest('User data required');
     }
+
     const response = await store.add( userData );
     const userId = userData.id || response._id || '';
 
@@ -19,6 +19,17 @@ async function addUser( userData ) {
     return response;
 }
 
+function updateUser( userData, _id ) {
+    if ( !userData ) {
+        throw boom.badRequest('User data required');
+    }
+
+    if(userData.password) {}
+
+    return store.update( userData );
+
+}
+
 function getUser() {
     return store.get();
 }
@@ -26,4 +37,5 @@ function getUser() {
 module.exports = {
     addUser,
     getUser,
+    updateUser,
 }

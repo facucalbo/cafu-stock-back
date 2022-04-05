@@ -10,6 +10,10 @@ function getUser() {
     return Model.find();
 }
 
+function update( userData ) {
+    // const response = Model.updateOne({_id: userData._id}, {$set: {}})
+}
+
 async function query(q) {
     const response = await Model.find({username: q.username});
     if(response.length === 1) {
@@ -21,5 +25,6 @@ async function query(q) {
 module.exports = {
     add: addUser,
     get: getUser,
+    update,
     query,
 }

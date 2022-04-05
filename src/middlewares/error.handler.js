@@ -8,8 +8,9 @@ function logErrors(err, req, res, next) {
 // errores no controlables
 function errorHandler(err, req, res, next) {
     res.status(500).json({
+        error: true,
+        status: err.status,
         message: err.message,
-        stack: err.stack
     })
 }
 
