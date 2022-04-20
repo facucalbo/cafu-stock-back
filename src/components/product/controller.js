@@ -8,12 +8,13 @@ function addProduct( product ){
         throw boom.badRequest(error.details.map( d => d.message ));
     }
 
-    const myProduct = product;
-    return store.add( myProduct );
+    return store.add( product );
 }
 
-function getAllProduct(){
-    return store.getAll();
+function getAllProduct( ownerId ){
+    if( !ownerId ) throw boom.badRequest('owner id not provided');
+
+    return store.getAll( ownerId );
 }
 
 function searchProduct( text ) {
@@ -35,6 +36,7 @@ function validateBody( body = {} ) {
         package: Joi.number().required(),
         stock: Joi.number().required(),
         price: Joi.number().required(),
+        owner: Joi.string().required(),
     })
     return schema.validate( body );
 }

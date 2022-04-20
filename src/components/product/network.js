@@ -1,46 +1,41 @@
 const express = require('express');
+
+const secureHandler = require('../../middlewares/secure.handler');
 const response = require('../../network/response');
 const controller = require('./controller');
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/:ownerId', secureHandler('owner'), (req, res, next) => {
     controller.addProduct( req.body )
         .then( product => {
             response.success(req, res, product, 201);
         })
-        .catch( err => {
-            response.error(req, res, err.output.message, err.output.statusCode);
-        })
+        .catch(next)
 });
 
-router.get('/', (req, res) => {
-    controller.getAllProduct()
+router.get('/owner/:ownerId', secureHandler('owner'), (req, res, next) => {
+    // console.log(req.headers);
+    controller.getAllProduct( req.params.ownerId )
         .then( product => {
             response.success(req, res, product, 201);
         })
-        .catch( err => {
-            response.error(req, res, err.output.message, err.output.statusCode);
-        })
+        .catch(next)
 });
 
-router.get('/:search', (req, res) => {
+router.get('/search/:search', secureHandler('logged'), (req, res, next) => {
     controller.searchProduct( req.params.search )
         .then( products => {
             response.success( req, res, products, 201)
         })
-        .catch( err => {
-            response.error(req, res, err.output.message, err.output.statusCode);
-        })
-})
+        .catch(next)
+});
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id/:ownerId', secureHandler('owner'), (req, res, next) => {
     controller.deleteProduct( req.params.id )
         .then( product => {
             response.success( req, res, product, 201)
         })
-        .catch( err => {
-            response.error(req, res, err.output.message, err.output.statusCode);
-        })
-})
+        .catch(next)
+});
 
 module.exports = router;

@@ -21,16 +21,21 @@ async function login( username, password ) {
     const userData = await userStore.query( {username: username} );
     const authData = await store.get(userData._id);
 
-    return bcrypt.compare(password, authData.password)
+    if(userData.error) {
+        throw boom.badData('Username not exist');
+    }
+
+    const res = await bcrypt.compare(password, authData.password)
         .then( areEquals => {
             if(!areEquals){
                 throw boom.badData('Incorrect password');
             }
-            return auth.sign(userData);   
+            const token = auth.sign(userData);
+            return {token: token}
         }).catch((err) => {
-            
+            throw err;
         });
-
+    return res;
 }
 
 module.exports = {

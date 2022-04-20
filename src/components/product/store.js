@@ -8,8 +8,8 @@ function addProduct( product ){
 }
 
 // search all products
-function getAllProduct(){
-    return Model.find();
+async function getAllProduct( ownerId ){
+    return Model.find({owner: ownerId});
 }
 
 function searchProduct( text ){

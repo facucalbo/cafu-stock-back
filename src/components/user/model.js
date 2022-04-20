@@ -17,9 +17,10 @@ const mySchema = new Schema({
         }
     }],
     clients: [{
-        type: Schema.ObjectId,
+        type: Schema.ObjectId, // poner un id personalizado?
         ref: 'Client',
     }]
+    // Probablemente tengas que crear un subschema para el arrayy de clientes
 });
 
 const model = mongoose.model('User', mySchema);

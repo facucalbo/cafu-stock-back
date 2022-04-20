@@ -1,6 +1,8 @@
 const express = require( 'express' );
 const cors = require('cors');
 const bodyParser = require( 'body-parser' );
+const cookieParser = require('cookie-parser');
+const { session } = require('./auth')
 const db = require('./db');
 const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
@@ -14,6 +16,8 @@ const router = require('./network/routes');
 const app = express();
 
 app.use( bodyParser.json() );
+app.use( cookieParser() );
+// app.use( session );
 
 const whitelist = ['http://localhost:3000'];
 const options = {

@@ -7,6 +7,12 @@ async function addUser( userData ) {
         throw boom.badRequest('User data required');
     }
 
+    const userExist = await store.findUser( userData.username );
+
+    if(userExist.length > 0) {
+        return {alredyExist: true}
+    }
+
     const response = await store.add( userData );
     const userId = userData.id || response._id || '';
 
@@ -33,6 +39,10 @@ function updateUser( userData, _id ) {
 function getUser() {
     return store.get();
 }
+
+// function getProducts() {
+//     db.users.aggregate([{$lookup: {from: "products", localField: "_id", foreignField: "owner", as: "products_docs"}}])
+// }
 
 module.exports = {
     addUser,

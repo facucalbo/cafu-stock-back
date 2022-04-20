@@ -10,8 +10,13 @@ function getUser() {
     return Model.find();
 }
 
+function findUser( username ) {
+    return Model.find({ username: username })
+}
+
 function update( userData ) {
     // const response = Model.updateOne({_id: userData._id}, {$set: {}})
+    return Model.find();
 }
 
 async function query(q) {
@@ -27,4 +32,5 @@ module.exports = {
     get: getUser,
     update,
     query,
+    findUser,
 }
