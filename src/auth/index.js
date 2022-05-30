@@ -26,9 +26,10 @@ function decodeHeader(req) {
     // console.log(req.headers);
     const authorization = req.headers.cookie || req.headers.authorization || '';
     const token = getToken(authorization);
-    const decoded = verify(token);
-    req.username = decoded.username;
-    return decoded;
+    const payload = verify(token);
+    req.username = payload.username;
+    console.log(payload);
+    return payload;
 }
 
 function getToken(auth) {
@@ -44,16 +45,8 @@ function getToken(auth) {
 
 const expireAge = 1000 * 60 * 60 * 24;
 
-const session = sessions({
-    name: 'sid',
-    secret: config.jwt.secret,
-    saveUninitialized: true,
-    cookie: { maxAge: expireAge },
-    resave: false,
-})
-
 module.exports = {
     sign,
     check,
-    session,
+    // session,
 }

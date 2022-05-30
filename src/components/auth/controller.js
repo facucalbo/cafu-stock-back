@@ -28,7 +28,7 @@ async function login( username, password ) {
     const res = await bcrypt.compare(password, authData.password)
         .then( areEquals => {
             if(!areEquals){
-                throw boom.badData('Incorrect password');
+                throw boom.badRequest('Incorrect password');
             }
             const token = auth.sign(userData);
             return {token: token}

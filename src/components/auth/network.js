@@ -6,14 +6,15 @@ const router = express.Router();
 
 router.post('/login', (req, res, next) => {
     // const session = req.session;
+    console.log(req.headers);
     controller.login(req.body.username, req.body.password)
         .then( data => {
             const options = {
-                httpOnly: true,
+                httpOnly: false,
                 // maxAge: 60,
-                // withCredentials: true,
                 path: '/',
-                secure: false,
+                sameSite: "none",
+                secure: false
             }
             res.cookie('id', data.token, options);
             response.success(req, res, data.error, 201);

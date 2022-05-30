@@ -2,7 +2,8 @@ const express = require( 'express' );
 const cors = require('cors');
 const bodyParser = require( 'body-parser' );
 const cookieParser = require('cookie-parser');
-const { session } = require('./auth')
+// const session = require('express-session');
+// const { session } = require('./auth')
 const db = require('./db');
 const { errorHandler, logErrors, boomErrorHandler } = require('./middlewares/error.handler');
 
@@ -17,9 +18,13 @@ const app = express();
 
 app.use( bodyParser.json() );
 app.use( cookieParser() );
-// app.use( session );
+// app.use( session({
+//         secret: 'notasecret!',
+//         saveUninitialized: false,
+//         resave: false,
+//     }));
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:4200', 'http://127.0.0.1:4200'];
 const options = {
     origin: ( origin, cb ) => {
         if( whitelist.includes(origin)) {
@@ -27,12 +32,12 @@ const options = {
             return
         } 
         cb(new Error('No permission')); 
-    }
+    },
+    credentials: true
 };
 
-app.use(cors(/* options */));
+app.use(cors(options));
 
-// app.use( router );
 router(app);
 app.use( logErrors );
 app.use( boomErrorHandler );
