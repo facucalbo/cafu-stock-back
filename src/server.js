@@ -24,7 +24,7 @@ app.use( cookieParser() );
 //         resave: false,
 //     }));
 
-const whitelist = ['http://localhost:3000', 'http://localhost:4200', 'http://127.0.0.1:4200'];
+const whitelist = ['http://localhost:3000', 'http://localhost:4200', 'http://127.0.0.1:4200', 'http://127.0.0.1'];
 const options = {
     origin: ( origin, cb ) => {
         if( whitelist.includes(origin)) {

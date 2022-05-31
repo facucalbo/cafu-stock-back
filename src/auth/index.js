@@ -37,8 +37,8 @@ function getToken(auth) {
         throw boom.unauthorized('Auth session is not provided');
     }
     const headers = auth.split(';');
-    let token = headers.find(c => c.indexOf('id=') === 0) || '';
-    token = token.replace('id=', '');
+    let token = headers.find(c => c.indexOf('sessionId=') === 0) || '';
+    token = token.replace('sessionId=', '');
     if(!token) throw boom.badData('Invalid token');
     return token;
 }

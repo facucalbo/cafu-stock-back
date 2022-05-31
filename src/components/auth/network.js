@@ -16,7 +16,7 @@ router.post('/login', (req, res, next) => {
                 sameSite: "none",
                 secure: false
             }
-            res.cookie('id', data.token, options);
+            res.cookie('sessionId', data.token, options);
             response.success(req, res, data.error, 201);
         })
         .catch(next)
