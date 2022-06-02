@@ -3,9 +3,9 @@ const auth = require('../auth');
 module.exports = checkAuth = ( action ) => {
     function checkHandler(req, res, next) {
         switch( action ) {
-            case 'owner':
-                const owner = req.params.ownerId || req.body.ownerId;
-                auth.check.own(req, owner);
+            case 'authorized':
+                const user = req.params.uid || req.body.uid;
+                auth.check.authorized(req, user);
                 next();
                 break;
             case 'logged':

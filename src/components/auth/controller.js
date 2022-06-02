@@ -4,6 +4,7 @@ const auth = require('../../auth')
 
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
+const config = require('../../config');
 
 async function upsert( data ){
     if(!typeof(data.id) === 'object') return store.update();
@@ -25,20 +26,44 @@ async function login( username, password ) {
         throw boom.badData('Username not exist');
     }
 
-    const res = await bcrypt.compare(password, authData.password)
+    const {token, refreshToken} = await bcrypt.compare(password, authData.password)
         .then( areEquals => {
             if(!areEquals){
                 throw boom.badRequest('Incorrect password');
             }
-            const token = auth.sign(userData);
-            return {token: token}
+            const token = auth.sign(userData, config.jwt.accessAge);
+            const refreshToken = auth.sign(token, config.jwt.refreshAge);
+
+            store.addToken(token, userData._id);
+
+            return {token: token, refreshToken: refreshToken};
         }).catch((err) => {
             throw err;
         });
-    return res;
+
+    const body = {
+        token, 
+        refreshToken, 
+        uid: userData._id
+    };
+
+    return body;
+}
+
+async function refreshToken( header ) {
+    const refreshToken = req.header.authorization || req.headers.cookie;
+    // const uid = req.params.uid;
+
+    if(!refreshToken) throw boom.badRequest('Refresh token not provided')
+
+    const accessToken = auth.sign(refreshToken, config.jwt.refreshSecret);
+
+    store.tokenIsValid(accessToken)
+    
 }
 
 module.exports = {
     upsert,
-    login
+    login,
+    refreshToken
 }

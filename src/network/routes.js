@@ -5,10 +5,10 @@ const auth = require('../components/auth/network');
 const sales = require('../components/realizedSale/network');
 
 const routes = function ( server ) {
-    server.use('/user', user);
-    server.use('/product', product);
-    server.use('/auth', auth);
-    server.use('/sales', sales);
+    server.use('/api/v1/user', user);
+    server.use('/api/v1/product', product);
+    server.use('/api/v1/auth', auth);
+    server.use('/api/v1/sales', sales);
 }
 
 module.exports = routes;

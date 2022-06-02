@@ -11,10 +11,10 @@ function addProduct( product ){
     return store.add( product );
 }
 
-function getAllProduct( ownerId ){
-    if( !ownerId ) throw boom.badRequest('owner id not provided');
+function getAllProduct( uid ){
+    if( !uid ) throw boom.badRequest('owner id not provided');
 
-    return store.getAll( ownerId );
+    return store.getAll( uid );
 }
 
 function searchProduct( text ) {

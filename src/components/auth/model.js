@@ -10,6 +10,17 @@ const mySchema = new Schema({
     password: String,
 })
 
-const model = mongoose.model('Auth', mySchema);
+const tokenSchema = new Schema({
+    uid: {
+        type: String
+    },
+    accessToken: String,
+})
 
-module.exports = model;
+const model = mongoose.model('Auth', mySchema);
+const tokenModel = mongoose.model('Tokens', tokenSchema);
+
+module.exports = {
+    model,
+    tokenModel
+};
