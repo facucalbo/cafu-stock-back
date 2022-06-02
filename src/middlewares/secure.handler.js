@@ -8,6 +8,10 @@ module.exports = checkAuth = ( action ) => {
                 auth.check.authorized(req, user);
                 next();
                 break;
+            case 'authenticated':
+                auth.check.authenticated(req, res);
+                next();
+                break;
             case 'logged':
                 auth.check.logged(req, res);
                 next();
@@ -16,6 +20,5 @@ module.exports = checkAuth = ( action ) => {
                 next();
         }
     }
-
     return checkHandler;
 }

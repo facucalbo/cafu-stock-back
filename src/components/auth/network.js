@@ -1,6 +1,7 @@
 const express = require('express');
 const controller = require('./controller');
 const response = require('../../network/response');
+const secureHandler = require('../../middlewares/secure.handler');
 const router = express.Router();
 
 router.post('/login', (req, res, next) => {
@@ -26,10 +27,11 @@ router.post('/logout', (req, res, next) => {
         }).catch(next);
 })
 
-router.post('/refresh-token', (req, res, next) => {
-    controller.refreshToken(req.headers, req.params)
+router.post('/refresh-token', secureHandler('authenticated'), (req, res, next) => {
+    controller.refreshToken(res.locals.authorization)
         .then(d => {
-            response.success(req, res, d.accessToken, 201);
+            console.log(d);
+            response.success(req, res, {accessToken: d}, 201);
         }) .catch(next)
 })
 

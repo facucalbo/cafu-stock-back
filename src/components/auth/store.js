@@ -26,15 +26,20 @@ function addAccessToken ( accessToken, uid ) {
         uid: uid, 
         accessToken: accessToken
     };
-
     const myToken = new tokenModel( data );
 
     return myToken.save();
 }
 
-function accessTokenIsValid( accessToken ) {
-    const response = tokenModel.find({accessToken: accessToken})
-    console.log(response);
+async function accessTokenIsValid( accessToken ) {
+    const response = await tokenModel.findOne({accessToken: accessToken})
+    deleteToken(response.uid);
+    addAccessToken( response.accessToken, response.uid);
+    return response;
+}
+
+async function deleteToken(uid) {
+    await tokenModel.deleteMany({'uid': uid});
 }
 
 module.exports = {

@@ -26,14 +26,14 @@ app.use( cookieParser() );
 
 const whitelist = ['http://localhost:3000', 'http://localhost:4200', 'http://127.0.0.1:4200', 'http://127.0.0.1'];
 const options = {
-    origin: ( origin, cb ) => {
-        if( whitelist.includes(origin)) {
-            cb(null, true);
-            return
-        } 
-        cb(new Error('No permission')); 
-    },
-    credentials: true
+    // origin: ( origin, cb ) => {
+    //     if( whitelist.includes(origin)) {
+    //         cb(null, true);
+    //         return
+    //     } 
+    //     cb(new Error('No permission')); 
+    // },
+    // credentials: true
 };
 
 app.use(cors(options));

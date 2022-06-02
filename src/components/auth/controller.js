@@ -31,8 +31,9 @@ async function login( username, password ) {
             if(!areEquals){
                 throw boom.badRequest('Incorrect password');
             }
-            const token = auth.sign(userData, config.jwt.accessAge);
-            const refreshToken = auth.sign(token, config.jwt.refreshAge);
+            console.log(userData);
+            const token = auth.sign(userData, config.jwt.secret, config.jwt.accessAge);
+            const refreshToken = auth.sign(token, config.jwt.refreshSecret, config.jwt.refreshAge);
 
             store.addToken(token, userData._id);
 
@@ -50,16 +51,12 @@ async function login( username, password ) {
     return body;
 }
 
-async function refreshToken( header ) {
-    const refreshToken = req.header.authorization || req.headers.cookie;
-    // const uid = req.params.uid;
-
-    if(!refreshToken) throw boom.badRequest('Refresh token not provided')
-
-    const accessToken = auth.sign(refreshToken, config.jwt.refreshSecret);
-
-    store.tokenIsValid(accessToken)
-    
+async function refreshToken( authorization ) {
+    const response = await store.tokenIsValid(authorization.data);
+    if(!response) throw boom.unauthorized('Invalid token');
+    // el token tiene de nombre _id pq el middleware q verifica si esta authorizado tiene ese parametro
+    const newAccessToken = auth.sign({_id: response.uid}, config.jwt.secret, config.jwt.accessAge);
+    return newAccessToken;
 }
 
 module.exports = {
