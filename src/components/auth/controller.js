@@ -33,9 +33,9 @@ async function login( username, password ) {
             }
             console.log(userData);
             const token = auth.sign(userData, config.jwt.secret, config.jwt.accessAge);
-            const refreshToken = auth.sign(token, config.jwt.refreshSecret, config.jwt.refreshAge);
+            const refreshToken = auth.sign(userData._id, config.jwt.refreshSecret, config.jwt.refreshAge);
 
-            store.addToken(token, userData._id);
+            store.authenticateUser(userData._id);
 
             return {token: token, refreshToken: refreshToken};
         }).catch((err) => {
@@ -53,9 +53,11 @@ async function login( username, password ) {
 
 async function refreshToken( authorization ) {
     const response = await store.tokenIsValid(authorization.data);
-    if(!response) throw boom.unauthorized('Invalid token');
+    if(!response) throw boom.unauthorized('token_invalid');
     // el token tiene de nombre _id pq el middleware q verifica si esta authorizado tiene ese parametro
     const newAccessToken = auth.sign({_id: response.uid}, config.jwt.secret, config.jwt.accessAge);
+    store.addToken(newAccessToken, response.uid);
+
     return newAccessToken;
 }
 

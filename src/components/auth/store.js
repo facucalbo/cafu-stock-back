@@ -21,24 +21,21 @@ async function getAuth( userId ){
     return {error: true}
 }
 
-function addAccessToken ( accessToken, uid ) {
+function addAuthenticatedUser( uid ) {
     const data = {
-        uid: uid, 
-        accessToken: accessToken
+        uid: uid,
     };
     const myToken = new tokenModel( data );
 
     return myToken.save();
 }
 
-async function accessTokenIsValid( accessToken ) {
-    const response = await tokenModel.findOne({accessToken: accessToken})
-    deleteToken(response.uid);
-    addAccessToken( response.accessToken, response.uid);
-    return response;
+async function userIsAuthenticated( uid ) {
+    await tokenModel.findOne({uid: uid})
+    await deleteUserAuthentication(uid);
 }
 
-async function deleteToken(uid) {
+async function deleteUserAuthentication(uid) {
     await tokenModel.deleteMany({'uid': uid});
 }
 
@@ -46,6 +43,6 @@ module.exports = {
     add: addNewUser,
     update: updateUser,
     get: getAuth,
-    addToken: addAccessToken,
-    tokenIsValid: accessTokenIsValid
+    authenticateUser: addAuthenticatedUser,
+    userIsAuthenticated,
 }

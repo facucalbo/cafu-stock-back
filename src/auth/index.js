@@ -12,7 +12,7 @@ function verify(token, secret) {
     try {
         return jwt.verify(token, secret);
     }catch(err) {
-        throw boom.unauthorized('Invalid token')
+        throw boom.unauthorized('token_invalid')
     }
 }
 
@@ -21,9 +21,6 @@ const check = {
         const authorization = decodeHeader(req)
         const token = decodeToken(authorization);
         const payload = verify(token, config.jwt.secret);
-        req.username = payload.username;
-
-        console.log(payload);
 
         if(payload.data._id !== user) throw boom.unauthorized('Have not access');
     },
@@ -35,6 +32,7 @@ const check = {
         const decodedToken = decodeToken(authorization);
         const payload = verify(decodedToken, config.jwt.secret);
         res.locals.authorization = payload;
+        console.log(payload);
     }
 }
 
@@ -50,7 +48,7 @@ function decodeToken(authorization) {
     // let token = headers.find(c => c.indexOf('c_token=') === 0) || '';
     // token = token.replace('c_token=', '');
     let token = authorization.replace('Bearer ', '');
-    if(!token) throw boom.badData('Invalid token');
+    if(!token) throw boom.badData('token_invalid');
 
     return token;
 }
