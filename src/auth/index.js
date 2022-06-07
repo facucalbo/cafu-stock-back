@@ -21,7 +21,6 @@ const check = {
         const authorization = decodeHeader(req)
         const token = decodeToken(authorization);
         const payload = verify(token, config.jwt.secret);
-
         if(payload.data._id !== user) throw boom.unauthorized('Have not access');
     },
     logged: (req, res) => {
@@ -32,7 +31,6 @@ const check = {
         const decodedToken = decodeToken(authorization);
         const payload = verify(decodedToken, config.jwt.secret);
         res.locals.authorization = payload;
-        console.log(payload);
     }
 }
 

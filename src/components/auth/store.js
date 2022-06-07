@@ -1,4 +1,4 @@
-const {model, tokenModel} = require('./model');
+const {model, authenticatedUserModel } = require('./model');
 
 function addNewUser( data ) {
     const myAuth = new model( data );
@@ -25,18 +25,18 @@ function addAuthenticatedUser( uid ) {
     const data = {
         uid: uid,
     };
-    const myToken = new tokenModel( data );
-
-    return myToken.save();
+    const myAuthenticatedUser = new authenticatedUserModel( data );
+    return myAuthenticatedUser.save();
 }
 
 async function userIsAuthenticated( uid ) {
-    await tokenModel.findOne({uid: uid})
-    await deleteUserAuthentication(uid);
+    const response = await authenticatedUserModel.findOne({uid: uid})
+    deleteUserAuthentication(uid);
+    return response;
 }
 
 async function deleteUserAuthentication(uid) {
-    await tokenModel.deleteMany({'uid': uid});
+    await authenticatedUserModel.deleteMany({'uid': uid});
 }
 
 module.exports = {

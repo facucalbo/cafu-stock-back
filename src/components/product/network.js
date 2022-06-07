@@ -14,7 +14,8 @@ router.post('/:uid', secureHandler('authorized'), (req, res, next) => {
 });
 
 router.get('/:uid', secureHandler('authorized'), (req, res, next) => {
-    console.log(req.headers);
+    console.log('req: ', req);
+    console.log('-----------------------------------------------------------');
     controller.getAllProduct( req.params.uid )
         .then( product => {
             response.success(req, res, product, 201);
