@@ -13,8 +13,8 @@ router.post('/:uid', secureHandler('authorized'), (req, res, next) => {
         .catch(next)
 });
 
+// El uid se deberia mandar por cookie
 router.get('/:uid', secureHandler('authorized'), (req, res, next) => {
-    console.log(req.headers);
     controller.getAllProduct( req.params.uid )
         .then( product => {
             response.success(req, res, product, 201);

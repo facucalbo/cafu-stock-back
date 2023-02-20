@@ -22,9 +22,7 @@ const check = {
         const token = decodeToken(authorization);
         const payload = verify(token, config.jwt.secret);
         req.username = payload.username;
-
-        console.log(payload);
-
+        
         if(payload.data._id !== user) throw boom.unauthorized('Have not access');
     },
     logged: (req, res) => {

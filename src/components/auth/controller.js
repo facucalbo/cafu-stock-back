@@ -31,7 +31,6 @@ async function login( username, password ) {
             if(!areEquals){
                 throw boom.badRequest('Incorrect password');
             }
-            console.log(userData);
             const token = auth.sign(userData, config.jwt.secret, config.jwt.accessAge);
             const refreshToken = auth.sign(token, config.jwt.refreshSecret, config.jwt.refreshAge);
 

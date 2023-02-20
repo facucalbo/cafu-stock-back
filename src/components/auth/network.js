@@ -30,7 +30,6 @@ router.post('/logout', (req, res, next) => {
 router.post('/refresh-token', secureHandler('authenticated'), (req, res, next) => {
     controller.refreshToken(res.locals.authorization)
         .then(d => {
-            console.log(d);
             response.success(req, res, {accessToken: d}, 201);
         }) .catch(next)
 })
