@@ -10,17 +10,16 @@ const mySchema = new Schema({
     password: String,
 })
 
-const tokenSchema = new Schema({
+const authenticatedUserSchema = new Schema({
     uid: {
         type: String
-    },
-    accessToken: String,
+    }
 })
 
 const model = mongoose.model('Auth', mySchema);
-const tokenModel = mongoose.model('Tokens', tokenSchema);
+const authenticatedUserModel = mongoose.model('Tokens', authenticatedUserSchema);
 
 module.exports = {
     model,
-    tokenModel
+    authenticatedUserModel
 };

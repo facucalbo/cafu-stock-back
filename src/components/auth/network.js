@@ -27,7 +27,7 @@ router.post('/logout', (req, res, next) => {
         }).catch(next);
 })
 
-router.post('/refresh-token', secureHandler('authenticated'), (req, res, next) => {
+router.get('/refresh-token', secureHandler('authenticated'), (req, res, next) => {
     controller.refreshToken(res.locals.authorization)
         .then(d => {
             response.success(req, res, {accessToken: d}, 201);

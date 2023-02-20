@@ -26,7 +26,7 @@ async function login( username, password ) {
         throw boom.badData('Username not exist');
     }
 
-    const {token, refreshToken} = await bcrypt.compare(password, authData.password)
+    const {accessToken, refreshToken} = await bcrypt.compare(password, authData.password)
         .then( areEquals => {
             if(!areEquals){
                 throw boom.badRequest('Incorrect password');
@@ -42,19 +42,20 @@ async function login( username, password ) {
         });
 
     const body = {
-        token, 
+        accessToken,
         refreshToken, 
         uid: userData._id
     };
-
     return body;
 }
 
 async function refreshToken( authorization ) {
-    const response = await store.tokenIsValid(authorization.data);
-    if(!response) throw boom.unauthorized('Invalid token');
+    const response = await store.userIsAuthenticated(authorization.data);
+    if(!response) throw boom.unauthorized('token_invalid');
     // el token tiene de nombre _id pq el middleware q verifica si esta authorizado tiene ese parametro
     const newAccessToken = auth.sign({_id: response.uid}, config.jwt.secret, config.jwt.accessAge);
+    store.authenticateUser(response.uid);
+
     return newAccessToken;
 }
 

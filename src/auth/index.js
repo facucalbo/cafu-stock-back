@@ -12,7 +12,7 @@ function verify(token, secret) {
     try {
         return jwt.verify(token, secret);
     }catch(err) {
-        throw boom.unauthorized('Invalid token')
+        throw boom.unauthorized('token_invalid')
     }
 }
 
@@ -48,7 +48,7 @@ function decodeToken(authorization) {
     // let token = headers.find(c => c.indexOf('c_token=') === 0) || '';
     // token = token.replace('c_token=', '');
     let token = authorization.replace('Bearer ', '');
-    if(!token) throw boom.badData('Invalid token');
+    if(!token) throw boom.badData('token_invalid');
 
     return token;
 }
